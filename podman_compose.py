@@ -1061,6 +1061,8 @@ def compose_up(compose, args):
 
     create_pods(compose, args)
     for cnt in compose.containers:
+        # default tty to true
+        cnt['tty'] = cnt.get('tty', True)
         podman_args = container_to_args(compose, cnt,
             detached=args.detach, podman_command=podman_command)
         compose.podman.run(podman_args)
