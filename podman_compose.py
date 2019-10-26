@@ -757,6 +757,10 @@ class PodmanCompose:
         cmd = args.command
         if not args.file:
             args.file = list(filter(os.path.exists, [
+                "podman-compose.yml",
+                "podman-compose.yaml",
+                "podman-compose.override.yml",
+                "podman-compose.override.yaml",
                 "docker-compose.yml",
                 "docker-compose.yaml",
                 "docker-compose.override.yml",
