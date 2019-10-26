@@ -756,20 +756,24 @@ class PodmanCompose:
         args = self.global_args
         cmd = args.command
         if not args.file:
+            # process podman-compose files first alone
             args.file = list(filter(os.path.exists, [
                 "podman-compose.yml",
                 "podman-compose.yaml",
                 "podman-compose.override.yml",
                 "podman-compose.override.yaml",
-                "docker-compose.yml",
-                "docker-compose.yaml",
-                "docker-compose.override.yml",
-                "docker-compose.override.yaml",
-                "container-compose.yml",
-                "container-compose.yaml",
-                "container-compose.override.yml",
-                "container-compose.override.yaml"
-            ]))
+                ]))
+            if not args.file:
+                args.file = list(filter(os.path.exists, [
+                    "docker-compose.yml",
+                    "docker-compose.yaml",
+                    "docker-compose.override.yml",
+                    "docker-compose.override.yaml",
+                    "container-compose.yml",
+                    "container-compose.yaml",
+                    "container-compose.override.yml",
+                    "container-compose.override.yaml"
+                ]))
         files = args.file
         if not files:
             print("no docker-compose.yml or container-compose.yml file found, pass files with -f")
